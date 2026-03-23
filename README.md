@@ -13,7 +13,7 @@
 
 ## 📖 Project Quick Links
 * 📄 **[Technical Whitepaper](./Empirical_Study_AI_Text_Detection_2026.pdf):** Full research methodology and findings.
-* 🚀 **[Live Demo](https://read-between-the-lines-rkpzkgwffh8qdz5tlq4uqv.streamlit.app/):** Test your own text against our models.
+* 🚀 [**Live Demo**](https://read-between-the-lines-rkpzkgwffh8qdz5tlq4uqv.streamlit.app/): Test your own text against our models.
 * 📂 **[Research Notebooks](./research):** Step-by-step development from Baseline to XAI.
 
 ---
