@@ -5,9 +5,9 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688)](https://fastapi.tiangolo.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> **Empirical Research & Full-Stack MLOps Pipeline** > Can we truly distinguish between human thought and algorithmic generation? This project is a forensic audit of AI detection, comparing four architectural paradigms—from simple linear math to 1.5B parameter Transformers—to identify the "Generalization Gap" in modern NLP.
+**Empirical Research & Full-Stack MLOps Pipeline** : Can we truly distinguish between human thought and algorithmic generation? This project is a forensic audit of AI detection, comparing four architectural paradigms—from simple linear math to 1.5B parameter Transformers—to identify the "Generalization Gap" in modern NLP.
 
-![Dashboard Preview](https://via.placeholder.com/800x400?text=Replace+this+with+a+screenshot+of+your+Streamlit+App)
+![Dashboard Preview](dashboard.png)
 
 ---
 
