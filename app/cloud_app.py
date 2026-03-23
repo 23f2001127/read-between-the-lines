@@ -3,12 +3,12 @@ import joblib
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from transformers import BertTokenizer, BertForSequenceClassification
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import re
 
 # --- 1. CONFIG & UI ---
 st.set_page_config(page_title="AI vs Human Detector Pro", layout="wide")
-st.title("🕵️‍♂️ Multi-Paradigm AI Detector (Cloud Version)")
+st.title("Multi-Paradigm AI Detector")
 st.markdown("Compare baseline ML, Deep Learning, and SOTA Transformers.")
 
 # --- 2. MODEL DEFINITIONS & CACHING ---
@@ -31,19 +31,21 @@ class LSTMModel(nn.Module):
 @st.cache_resource
 def load_models():
     """Loads all models once and caches them to save Cloud RAM."""
+    model_path = "models"
+    
     # 1. Load LR
-    lr = joblib.load("models/logistic_regression_model.joblib")
-    tfidf = joblib.load("models/tfidf_vectorizer.joblib")
+    lr = joblib.load(f"{model_path}/logistic_regression_model.joblib")
+    tfidf = joblib.load(f"{model_path}/tfidf_vectorizer.joblib")
     
     # 2. Load LSTM
-    vocab = torch.load("models/vocab.pth", map_location=device)
+    vocab = torch.load(f"{model_path}/vocab.pth", map_location=device)
     lstm = LSTMModel(vocab_size=len(vocab), embed_dim=128, hidden_dim=128)
-    lstm.load_state_dict(torch.load("models/lstm_model.pth", map_location=device))
+    lstm.load_state_dict(torch.load(f"{model_path}/lstm_model.pth", map_location=device))
     lstm.to(device).eval()
     
-    # 3. Load BERT
-    bert_tok = BertTokenizer.from_pretrained("models")
-    bert_mod = BertForSequenceClassification.from_pretrained("models").to(device)
+    # 3. Load BERT (Using Auto-classes for better configuration matching)
+    bert_tok = AutoTokenizer.from_pretrained(model_path)
+    bert_mod = AutoModelForSequenceClassification.from_pretrained(model_path).to(device)
     bert_mod.eval()
     
     return lr, tfidf, lstm, vocab, bert_tok, bert_mod
@@ -60,7 +62,7 @@ def text_cleaning(text):
 
 def preprocess_pytorch_text(text, max_len=350):
     cleaned_text = text_cleaning(text)
-    tokens = [vocab.get(word, vocab["<UNK>"]) for word in cleaned_text.split()]
+    tokens = [vocab.get(word, vocab.get("<UNK>", 0)) for word in cleaned_text.split()]
     if len(tokens) < max_len:
         tokens = tokens + [0] * (max_len - len(tokens))
     else:
